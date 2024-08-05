@@ -1,0 +1,96 @@
+
+import "pe"
+
+rule darkgate_au3exe_xor_decoded {
+
+    meta:
+    	description = "Detects characteristics of the XOR decoded DarkGate .au3 file"
+        family = "DarkGate"
+        author = "Bl4ckM4d0nn4"
+        date = "2024-07-25"
+        hash1 = "afe012ed0d96abfe869b9e26ea375824" 
+        hash2 = "c57ee7d4b516052d7da705a251572d6a"
+        hash3 = "cad102af0d2709fd57f62d9cce9ba174"
+        hash4 = "2a324cba9f874bfd6a567848d9bb6127"
+        hash5 = "5dfd4fb5c77067af21ab95f97b97a0b0"
+        hash6 = "609b505e9f75649583e3c0b78a76aa26"
+    
+    strings:    
+        $a1 = "All Credentials got Removed"
+        $a2 = "\\Network\\Cookies"
+        $a3 = "rootkit"
+        $a4 = "ping 127.0.0.1 & del /q /f /s"
+        $a5 = "OnHeartbeat("
+        $a6 = "autoit3.exe" nocase
+        
+        $b1 = "C:\\Program Files\\Quick Heal"
+        $b2 = "C:\\ProgramData\\Emsisoft"
+        $b3 = "C:\\ProgramData\\Kaspersky"
+        $b4 = "C:\\ProgramData\\Bitdefender"
+        $b5 = "C:\\ProgramData\\AVAST"
+	$b6 = "C:\\Program Files (x86)\\Avira"
+	$b7 = "Sophos"
+    
+    condition:
+    	filesize < 1MB 
+    	
+	and all of ($a*) and
+	
+	3 of ($b*) and
+	
+	(pe.imphash() == "2d49f2c55baaa08fbacf203d290249d2" or
+	pe.imphash() == "873d7205bf0fd5da7688d9e8579268df" or
+	pe.imphash() == "9cbefe68f395e67356e2a5d8d1b285c0" or
+	pe.imphash() == "ad0310039c6d035e796b42bd4b56460e")
+
+
+}
+
+import "pe"
+
+rule darkgate_cyrptominer_au3exe_xor_decoded {
+
+    meta:
+    	description = "Detects characteristics of the XOR decoded DarkGate .au3 file with cryptominer module"
+        family = "DarkGate"
+        author = "Bl4ckM4d0nn4"
+        date = "2024-08-01"
+        hash1 = "6c5c2b65267a4781de89b370fc2ea3a6" 
+        hash2 = "6c5c2b65267a4781de89b370fc2ea3a6"
+    
+    strings:    
+        $a1 = "All Credentials got Removed"
+        $a2 = "\\Network\\Cookies"
+        $a3 = "rootkit"
+        $a4 = "ping 127.0.0.1 & del /q /f /s"
+        $a5 = "OnHeartbeat("
+        $a6 = "autoit3.exe" nocase
+        
+        $b1 = "C:\\Program Files\\Quick Heal"
+        $b2 = "C:\\ProgramData\\Emsisoft"
+        $b3 = "C:\\ProgramData\\Kaspersky"
+        $b4 = "C:\\ProgramData\\Bitdefender"
+        $b5 = "C:\\ProgramData\\AVAST"
+	$b6 = "C:\\Program Files (x86)\\Avira"
+	$b7 = "Sophos"
+	
+	$c1 = "Miner is waiting IDLE"
+        // $c2 = "C:\\darkgateminertest"
+        // $c3 = "/c reg add \"HKEY_LOCAL_MACHINE"
+        // $c4 = "Set-ItemProperty -Path \"\"HKCU:\\Software\\Microsoft\\Terminal"
+        $c5 = "DisableSecuritySettings"
+    
+    condition:
+    	filesize < 1MB 
+    	
+	and all of ($a*) and
+
+	3 of ($b*) and
+
+	all of ($c*) and
+	
+	(pe.imphash() == "8a6e4daa1c188dbbf0c820e65c7af6dd" or
+	pe.imphash() == "92a66bf38290777deabaf440777e70fa")
+
+}
+
