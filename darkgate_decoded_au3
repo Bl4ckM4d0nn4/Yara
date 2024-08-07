@@ -4,7 +4,7 @@ import "pe"
 rule darkgate_au3exe_xor_decoded {
 
     meta:
-    	description = "Detects characteristics of the XOR decoded DarkGate .au3 file"
+        description = "Detects characteristics of the XOR decoded DarkGate .au3 file"
         family = "DarkGate"
         author = "Bl4ckM4d0nn4"
         date = "2024-07-25"
@@ -51,7 +51,7 @@ import "pe"
 rule darkgate_cyrptominer_au3exe_xor_decoded {
 
     meta:
-    	description = "Detects characteristics of the XOR decoded DarkGate .au3 file with cryptominer module"
+        description = "Detects characteristics of the XOR decoded DarkGate .au3 file with cryptominer module"
         family = "DarkGate"
         author = "Bl4ckM4d0nn4"
         date = "2024-08-01"
