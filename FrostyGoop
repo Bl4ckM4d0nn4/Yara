@@ -1,0 +1,33 @@
+import "pe"
+
+rule frosty_goop_ics_1_1 {
+
+    meta:
+
+        description = "Detects characteristics of FrostyGoop executables"
+        family = "FrostyGoop"
+        source = "TLP:Amber Do not distribute without express permission."
+        author = "Bl4ckM4d0nn4"
+        date = "2024-07-25"
+        hash1 = "5d2e4fd08f81e3b2eb2f3eaae16eb32ae02e760afc36fa17f4649322f6da53fb"
+        hash2 = "a63ba88ad869085f1625729708ba65e87f5b37d7be9153b3db1a1b0e3fed309c"
+        hash3 = "2fd9cb69ef30c0d00a61851b2d96350a9be68c7f1f25a31f896082cfbf39559a"
+         
+    strings:
+
+        $s1 = "github.com/rolfl/modbus"
+        $s2 = "gopkg.in/logex%2ev1."
+        $s5 = "WriteCoils" nocase
+        $s6 = "ReadCoils" nocase
+        $s7 = "writesingleholding" nocase
+        $s8 = "*modbus.tcp"
+        $s9 = "struct { F uintptr; .autotmp_" nocase
+        
+    condition:
+        filesize < 4MB
+        
+        and all of them and
+
+         (pe.imphash() == "f0ea7b7844bbc5bfa9bb32efdcea957c" or 
+         pe.imphash() == "9cbefe68f395e67356e2a5d8d1b285c0")
+}
