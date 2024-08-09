@@ -6,7 +6,6 @@ rule frosty_goop_ics_1_1 {
 
         description = "Detects characteristics of FrostyGoop executables"
         family = "FrostyGoop"
-        source = "TLP:Amber Do not distribute without express permission."
         author = "Bl4ckM4d0nn4"
         date = "2024-07-25"
         hash1 = "5d2e4fd08f81e3b2eb2f3eaae16eb32ae02e760afc36fa17f4649322f6da53fb"
